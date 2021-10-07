@@ -1,6 +1,6 @@
 const maxDays = 30;
 
-async function genReportLog(container, key, url) {
+async function genReportLog(container, key) {
   const response = await fetch(key);
   let statusLines = "";
   if (response.ok) {
@@ -21,11 +21,11 @@ async function genReportLog(container, key, url) {
   const lTime = (parseFloat(statusLines.substring(statusLines.lastIndexOf(', ')+1))*1000).toFixed(0);
   const [normalized, aTime] = normalizeData(statusLines);
   //console.log(normalized);
-  const statusStream = constructStatusStream(key, url, normalized, aTime, lTime);
+  const statusStream = constructStatusStream(key, normalized, aTime, lTime);
   container.appendChild(statusStream);
 }
 
-function constructStatusStream(key, url, uptimeData, aTime, lTime) {
+function constructStatusStream(key, uptimeData, aTime, lTime) {
   let streamContainer = templatize("statusStreamContainerTemplate");
   for (var ii = maxDays - 1; ii >= 0; ii--) {
     let line = constructStatusLine(key, ii, uptimeData[ii]);
@@ -37,7 +37,6 @@ function constructStatusStream(key, url, uptimeData, aTime, lTime) {
 
   const container = templatize("statusContainerTemplate", {
     title: key.replaceAll("_", " "),
-    url: url,
     color: color,
     status: getStatusText(color),
     upTime: uptimeData.upTime,
@@ -267,7 +266,7 @@ async function genAllReports() {
     //if (!key || !url) {
     //  continue;
     //}
-    await genReportLog(document.getElementById("reports"), configLine, 'https://status.izzak.eu/');
+    await genReportLog(document.getElementById("reports"), configLine);
     //await genReportLog(document.getElementById("reports"), key, url);
   }
 }
