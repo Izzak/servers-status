@@ -23,7 +23,7 @@ jobs:
         mkdir -p logs
         IFS=';' read -ra ODKAZY <<< "${{ secrets.PAGES }}"
         for odkaz in "${ODKAZY[@]}"; do
-          (echo -n $(date '+%d/%m/%Y %H:%M:%S')", ";curl --write-out '%{http_code}, %{time_total}' --silent --insecure --output /dev/null $odkaz;echo "") >> logs/$odkaz.txt
+          (echo -n $(date '+%d/%m/%Y %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --insecure --output /dev/null $odkaz;echo "") >> logs/$odkaz.txt
         done
     - name: Commit files
       id: commit
