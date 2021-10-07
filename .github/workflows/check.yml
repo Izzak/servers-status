@@ -24,7 +24,7 @@ jobs:
         IFS='|' read -ra ODKAZY <<< "${{ secrets.LOAD_BALANCER }}"
         for ODKAZ in "${ODKAZY[@]}"; do
           IFS='=' read -ra odkaz <<< "$ODKAZ"
-          (echo -n $(date '+%Y-%m-%d %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --max-time 5 --insecure --output /dev/null ${odkaz[1]};echo) >> logs/${odkaz[0]}.log
+          (echo -n $(date '+%Y-%m-%d %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --max-time 10 --insecure --output /dev/null ${odkaz[1]};echo) >> logs/${odkaz[0]}.log
         done
 
     - name: Check status SERVER 1
@@ -35,7 +35,7 @@ jobs:
         IFS='|' read -ra ODKAZY <<< "${{ secrets.SERVER_1 }}"
         for ODKAZ in "${ODKAZY[@]}"; do
           IFS='=' read -ra odkaz <<< "$ODKAZ"
-          (echo -n $(date '+%Y-%m-%d %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --max-time 5 --insecure --output /dev/null ${odkaz[1]};echo) >> logs/${odkaz[0]}.log
+          (echo -n $(date '+%Y-%m-%d %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --max-time 10 --insecure --output /dev/null ${odkaz[1]};echo) >> logs/${odkaz[0]}.log
         done
 
     - name: Check status SERVER 2
@@ -46,7 +46,7 @@ jobs:
         IFS='|' read -ra ODKAZY <<< "${{ secrets.SERVER_2 }}"
         for ODKAZ in "${ODKAZY[@]}"; do
           IFS='=' read -ra odkaz <<< "$ODKAZ"
-          (echo -n $(date '+%Y-%m-%d %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --max-time 5 --insecure --output /dev/null ${odkaz[1]};echo) >> logs/${odkaz[0]}.log
+          (echo -n $(date '+%Y-%m-%d %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --max-time 10 --insecure --output /dev/null ${odkaz[1]};echo) >> logs/${odkaz[0]}.log
         done
 
     - name: Check status SERVER 3
@@ -57,7 +57,7 @@ jobs:
         IFS='|' read -ra ODKAZY <<< "${{ secrets.SERVER_3 }}"
         for ODKAZ in "${ODKAZY[@]}"; do
           IFS='=' read -ra odkaz <<< "$ODKAZ"
-          (echo -n $(date '+%Y-%m-%d %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --max-time 5 --insecure --output /dev/null ${odkaz[1]};echo) >> logs/${odkaz[0]}.log
+          (echo -n $(date '+%Y-%m-%d %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --max-time 10 --insecure --output /dev/null ${odkaz[1]};echo) >> logs/${odkaz[0]}.log
         done
 
     - name: Generate filesname
