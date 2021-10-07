@@ -6,7 +6,6 @@ on:
     - cron: '*/30 * * * *'
   push:
     branches:
-      - master
       - main
 
 
