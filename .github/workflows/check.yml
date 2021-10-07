@@ -1,4 +1,4 @@
-name: Status Check
+name: Check status
 
 on:
   schedule:
@@ -15,58 +15,49 @@ jobs:
     - uses: actions/checkout@v2
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Check status LOAD BALANCER
       id: check_load_balancer
-      shell: bash
       run: |
-        #!/bin/sh
         mkdir logs
         IFS='|' read -ra ODKAZY <<< "${{ secrets.LOAD_BALANCER }}"
         for ODKAZ in "${ODKAZY[@]}"; do
           IFS='=' read -ra odkaz <<< "$ODKAZ"
           (echo -n $(date '+%Y-%m-%d %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --max-time 5 --insecure --output /dev/null ${odkaz[1]};echo) >> logs/${odkaz[0]}.log
         done
-        EOF
+
     - name: Check status SERVER 1
       id: check_server_1
-      shell: bash
       run: |
-        #!/bin/sh
         IFS='|' read -ra ODKAZY <<< "${{ secrets.SERVER_1 }}"
         for ODKAZ in "${ODKAZY[@]}"; do
           IFS='=' read -ra odkaz <<< "$ODKAZ"
           (echo -n $(date '+%Y-%m-%d %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --max-time 5 --insecure --output /dev/null ${odkaz[1]};echo) >> logs/${odkaz[0]}.log
         done
-        EOF
+
     - name: Check status SERVER 2
       id: check_server_2
-      shell: bash
       run: |
-        #!/bin/sh
         IFS='|' read -ra ODKAZY <<< "${{ secrets.SERVER_2 }}"
         for ODKAZ in "${ODKAZY[@]}"; do
           IFS='=' read -ra odkaz <<< "$ODKAZ"
           (echo -n $(date '+%Y-%m-%d %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --max-time 5 --insecure --output /dev/null ${odkaz[1]};echo) >> logs/${odkaz[0]}.log
         done
-        EOF
+
     - name: Check status SERVER 3
       id: check_server_3
-      shell: bash
       run: |
-        #!/bin/sh
         IFS='|' read -ra ODKAZY <<< "${{ secrets.SERVER_3 }}"
         for ODKAZ in "${ODKAZY[@]}"; do
           IFS='=' read -ra odkaz <<< "$ODKAZ"
           (echo -n $(date '+%Y-%m-%d %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --max-time 5 --insecure --output /dev/null ${odkaz[1]};echo) >> logs/${odkaz[0]}.log
         done
-        EOF
+
     - name: Generate filesname
       id: filesname
-      shell: bash
       run: |
-        #!/bin/sh
         find logs/ -iname '*.log' > logs/files.cfg
-        EOF
+
     - name: Commit and push files
       id: commit
       run: |
@@ -75,4 +66,3 @@ jobs:
         git add -A --force logs/
         git commit -am '[Automated] Update Status Logs'
         git push
-      shell: bash
