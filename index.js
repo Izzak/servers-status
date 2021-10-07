@@ -6,7 +6,7 @@ async function genReportLog(container, key, url) {
   if (response.ok) {
     statusLines = await response.text();
   }
-
+  console.log(statusLines);
   const normalized = normalizeData(statusLines);
   const Time = (parseFloat(statusLines.substring(statusLines.lastIndexOf(', ')+1))*1000).toFixed(0);
   const statusStream = constructStatusStream(key, url, normalized, Time);
@@ -244,8 +244,8 @@ async function genAllReports() {
   console.log(configText);
   const configLines = configText.split("\n");
   for (let ii = 0; ii < configLines.length-1; ii++) {
-    console.log(configLine[ii]);
     const configLine = configLines[ii];
+    console.log(configLine);
     const [key, url] = configLine.split("=");
     if (!key || !url) {
       continue;
