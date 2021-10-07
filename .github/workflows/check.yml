@@ -31,6 +31,6 @@ jobs:
         git config --local user.email "tomas-dockal@seznam.cz"
         git config --local user.name "Izzak"
         git add -A --force logs/
-        git commit -am '[Automated] Update Status Check Logs'
+        git commit -am '[Automated] Update Status Logs'
         git push
       shell: bash
