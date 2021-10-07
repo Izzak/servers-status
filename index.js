@@ -8,7 +8,7 @@ async function genReportLog(container, key, url) {
   }
   key = key.replaceAll("logs/","").replaceAll(".log","");
   const Time = '';
-  var array = string.split(', ');
+  var array = statusLines.split(', ');
   if (array[1] == '200' && array[1] == '202' && array[1] == '201' && array[1] == '301' && array[1] == '307') {
     array[1] = "success";
     Time = (parseFloat(array[2])*1000).toFixed(0);;
