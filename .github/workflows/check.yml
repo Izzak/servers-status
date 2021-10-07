@@ -17,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Check all sites
-      id: shell_script_run
+      id: check_script
       shell: bash
       run: |
         mkdir -p logs
