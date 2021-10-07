@@ -23,7 +23,7 @@ jobs:
       shell: bash
       run: |
         mkdir -p logs
-        IFS='|' read -ra ODKAZY <<< "${{ secrets.PAGES }}"
+        IFS="\n" read -ra ODKAZY <<< "${{ secrets.PAGES }}"
         for ODKAZ in "${ODKAZY[@]}"; do
           IFS='=' read -ra odkaz <<< "$ODKAZ"
           (echo -n $(date '+%Y-%m-%d %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --insecure --output /dev/null ${odkaz[1]};echo) >> logs/${odkaz[0]}.log
