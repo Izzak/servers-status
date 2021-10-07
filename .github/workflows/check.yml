@@ -23,6 +23,7 @@ jobs:
       shell: bash
       run: |
         mkdir -p logs
+        echo "${{ secrets.PAGES }}"
         IFS="\n" read -ra ODKAZY <<< "${{ secrets.PAGES }}"
         for ODKAZ in "${ODKAZY[@]}"; do
           IFS='=' read -ra odkaz <<< "$ODKAZ"
