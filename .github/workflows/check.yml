@@ -20,7 +20,7 @@ jobs:
       id: check_load_balancer
       shell: bash
       run: |
-        mkdir -p logs
+        mkdir logs
         IFS='|' read -ra ODKAZY <<< "${{ secrets.LOAD_BALANCER }}"
         for ODKAZ in "${ODKAZY[@]}"; do
           IFS='=' read -ra odkaz <<< "$ODKAZ"
@@ -31,7 +31,6 @@ jobs:
       id: check_server_1
       shell: bash
       run: |
-        mkdir -p logs
         IFS='|' read -ra ODKAZY <<< "${{ secrets.SERVER_1 }}"
         for ODKAZ in "${ODKAZY[@]}"; do
           IFS='=' read -ra odkaz <<< "$ODKAZ"
@@ -42,7 +41,6 @@ jobs:
       id: check_server_2
       shell: bash
       run: |
-        mkdir -p logs
         IFS='|' read -ra ODKAZY <<< "${{ secrets.SERVER_2 }}"
         for ODKAZ in "${ODKAZY[@]}"; do
           IFS='=' read -ra odkaz <<< "$ODKAZ"
@@ -53,7 +51,6 @@ jobs:
       id: check_server_3
       shell: bash
       run: |
-        mkdir -p logs
         IFS='|' read -ra ODKAZY <<< "${{ secrets.SERVER_3 }}"
         for ODKAZ in "${ODKAZY[@]}"; do
           IFS='=' read -ra odkaz <<< "$ODKAZ"
