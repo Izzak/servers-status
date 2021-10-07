@@ -17,7 +17,7 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Check status LOAD BALANCER
-      id: check_status
+      id: check_load_balancer
       shell: bash
       run: |
         mkdir -p logs
@@ -28,7 +28,7 @@ jobs:
         done
 
     - name: Check status SERVER 1
-      id: check_status
+      id: check_server_1
       shell: bash
       run: |
         mkdir -p logs
@@ -39,7 +39,7 @@ jobs:
         done
 
     - name: Check status SERVER 2
-      id: check_status
+      id: check_server_2
       shell: bash
       run: |
         mkdir -p logs
@@ -50,7 +50,7 @@ jobs:
         done
 
     - name: Check status SERVER 3
-      id: check_status
+      id: check_server_3
       shell: bash
       run: |
         mkdir -p logs
