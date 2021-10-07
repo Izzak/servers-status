@@ -20,34 +20,16 @@ jobs:
       id: check_load_balancer
       run: |
         mkdir logs
-        IFS='|' read -ra ODKAZY <<< "${{ secrets.LOAD_BALANCER }}"
+        IFS='|' read -ra ODKAZY <<< "${{ secrets.ONE }}"
         for ODKAZ in "${ODKAZY[@]}"; do
           IFS='=' read -ra odkaz <<< "$ODKAZ"
           (echo -n $(date '+%Y-%m-%d %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --max-time 5 --insecure --output /dev/null ${odkaz[1]};echo) >> logs/${odkaz[0]}.log
         done
 
     - name: Check status SERVER 1
-      id: check_server_1
+      id: check_server
       run: |
-        IFS='|' read -ra ODKAZY <<< "${{ secrets.SERVER_1 }}"
-        for ODKAZ in "${ODKAZY[@]}"; do
-          IFS='=' read -ra odkaz <<< "$ODKAZ"
-          (echo -n $(date '+%Y-%m-%d %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --max-time 5 --insecure --output /dev/null ${odkaz[1]};echo) >> logs/${odkaz[0]}.log
-        done
-
-    - name: Check status SERVER 2
-      id: check_server_2
-      run: |
-        IFS='|' read -ra ODKAZY <<< "${{ secrets.SERVER_2 }}"
-        for ODKAZ in "${ODKAZY[@]}"; do
-          IFS='=' read -ra odkaz <<< "$ODKAZ"
-          (echo -n $(date '+%Y-%m-%d %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --max-time 5 --insecure --output /dev/null ${odkaz[1]};echo) >> logs/${odkaz[0]}.log
-        done
-
-    - name: Check status SERVER 3
-      id: check_server_3
-      run: |
-        IFS='|' read -ra ODKAZY <<< "${{ secrets.SERVER_3 }}"
+        IFS='|' read -ra ODKAZY <<< "${{ secrets.TWO }}"
         for ODKAZ in "${ODKAZY[@]}"; do
           IFS='=' read -ra odkaz <<< "$ODKAZ"
           (echo -n $(date '+%Y-%m-%d %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --max-time 5 --insecure --output /dev/null ${odkaz[1]};echo) >> logs/${odkaz[0]}.log
