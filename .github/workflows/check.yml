@@ -24,7 +24,7 @@ jobs:
         for odkaz in "${ODKAZY[@]}"; do
           (echo -n $(date '+%d/%m/%Y %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --insecure --output /dev/null $odkaz;echo) >> logs/$odkaz.txt
         done
-    - name: Commit files
+    - name: Commit and push files
       id: commit
       run: |
         git config --local user.email "tomas-dockal@seznam.cz"
