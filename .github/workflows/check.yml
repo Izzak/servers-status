@@ -20,7 +20,7 @@ jobs:
       id: shell_script_run
       shell: bash
       run: |
-      (echo -n $(date '+%d/%m/%Y %H:%M:%S')", ";curl --write-out '%{http_code}, %{time_total}' --silent --insecure --output $SUPER_SECRET.tx $SUPER_SECRET;echo "") >> $SUPER_SECRET.txt
+        (echo -n $(date '+%d/%m/%Y %H:%M:%S')", ";curl --write-out '%{http_code}, %{time_total}' --silent --insecure --output $SUPER_SECRET.tx $SUPER_SECRET;echo "") >> $SUPER_SECRET.txt
     - name: Commit files
       id: commit
       run: |
