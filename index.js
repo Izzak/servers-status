@@ -246,11 +246,12 @@ async function genAllReports() {
   for (let ii = 0; ii < configLines.length-1; ii++) {
     const configLine = configLines[ii];
     console.log(configLine);
-    const [key, url] = configLine.split("=");
-    if (!key || !url) {
-      continue;
-    }
+    //const [key, url] = configLine.split("=");
+    //if (!key || !url) {
+    //  continue;
+    //}
 
-    await genReportLog(document.getElementById("reports"), key, url);
+    await genReportLog(document.getElementById("reports"), key, 'https://status.izzak.eu/');
+    //await genReportLog(document.getElementById("reports"), key, url);
   }
 }
