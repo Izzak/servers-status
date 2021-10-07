@@ -34,3 +34,5 @@ jobs:
         git commit -am '[Automated] Update Status Check Logs'
         git push
       shell: bash
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
