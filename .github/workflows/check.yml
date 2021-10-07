@@ -15,7 +15,6 @@ jobs:
     - uses: actions/checkout@v2
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-
     - name: Check status LOAD BALANCER
       id: check_load_balancer
       shell: bash
