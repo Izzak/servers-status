@@ -7,6 +7,7 @@ async function genReportLog(container, key, url) {
     statusLines = await response.text();
   }
   key = key.replaceAll("logs/","").replaceAll(".log","");
+  /*/
   var array = statusLines.split(', ');
   if (array[1] == '200' && array[1] == '202' && array[1] == '201' && array[1] == '301' && array[1] == '307') {
     array[1] = "success";
@@ -16,6 +17,8 @@ async function genReportLog(container, key, url) {
     var Time = 0;
   }
   statusLines = array.join(", ");
+  /*/
+  const Time = (parseFloat(statusLines.substring(statusLines.lastIndexOf(', ')+1))*1000).toFixed(0);
   const normalized = normalizeData(statusLines);
   const statusStream = constructStatusStream(key, url, normalized, Time);
   container.appendChild(statusStream);
