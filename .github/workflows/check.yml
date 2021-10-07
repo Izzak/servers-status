@@ -10,7 +10,7 @@ on:
 jobs:
   status-check:
     runs-on: ubuntu-latest
-    name: Check all sites
+    name: Check status
     steps:
     - uses: actions/checkout@v2
       env:
@@ -19,7 +19,7 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
     - name: Check status
-      id: check_script
+      id: check_status
       shell: bash
       run: |
         mkdir -p logs
@@ -29,7 +29,7 @@ jobs:
           (echo -n $(date '+%d/%m/%Y %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --insecure --output /dev/null ${odkaz[1]};echo) >> logs/${odkaz[0]}.log
         done
         find logs/ -iname '*.log' > logs/files.cfg
-    - name: Commit and push
+    - name: Commit and push files
       id: commit
       run: |
         git config --local user.email "tomas-dockal@seznam.cz"
