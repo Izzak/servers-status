@@ -6,7 +6,7 @@ async function genReportLog(container, key, url) {
   if (response.ok) {
     statusLines = await response.text();
   }
-  key.replaceAll("logs/","").replaceAll(".log","");
+  key = key.replaceAll("logs/","").replaceAll(".log","");
   const normalized = normalizeData(statusLines);
   const Time = (parseFloat(statusLines.substring(statusLines.lastIndexOf(', ')+1))*1000).toFixed(0);
   const statusStream = constructStatusStream(key, url, normalized, Time);
