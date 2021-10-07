@@ -20,6 +20,16 @@
         <div id="tooltipDescription" class="tooltipDescription"></div>
       </div>
       <div id="templates" style="display: none">
+        <div
+          id="statusSquareTemplate"
+          class="statusSquare $color"
+          data-status="$color"
+        ></div>
+        <div id="statusLineTemplate" class="statusLine"></div>
+        <div
+          id="statusStreamContainerTemplate"
+          class="statusStreamContainer"
+        ></div>
         <div id="statusContainerTemplate" class="statusContainer">
           <div class="statusHeader">
             <h6 class="statusTitle">$title&nbsp;</h6>
@@ -33,10 +43,7 @@
       </div>
     </div>
     <footer>
-      Forked from
-      <a href="https://github.com/statsig-io/statuspage/"
-        >Statsig's Open-Source Status Page</a
-      >.
+        <a href="https://datinger.izzak.eu/">Datinger</a> servers status page.
     </footer>
   </body>
   <script>
