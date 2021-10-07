@@ -18,13 +18,14 @@ async function genReportLog(container, key, url) {
   }
   statusLines = array.join(", ");
   /*/
-  const Time = (parseFloat(statusLines.substring(statusLines.lastIndexOf(', ')+1))*1000).toFixed(0);
-  const normalized = normalizeData(statusLines);
-  const statusStream = constructStatusStream(key, url, normalized, Time);
+  const lTime = (parseFloat(statusLines.substring(statusLines.lastIndexOf(', ')+1))*1000).toFixed(0);
+  const [normalized, aTime] = normalizeData(statusLines);
+  //console.log(normalized);
+  const statusStream = constructStatusStream(key, url, normalized, aTime, lTime);
   container.appendChild(statusStream);
 }
 
-function constructStatusStream(key, url, uptimeData, time) {
+function constructStatusStream(key, url, uptimeData, aTime, lTime) {
   let streamContainer = templatize("statusStreamContainerTemplate");
   for (var ii = maxDays - 1; ii >= 0; ii--) {
     let line = constructStatusLine(key, ii, uptimeData[ii]);
@@ -40,7 +41,8 @@ function constructStatusStream(key, url, uptimeData, time) {
     color: color,
     status: getStatusText(color),
     upTime: uptimeData.upTime,
-    sTime: time+"ms",
+    lTime: lTime+"ms",
+    aTime: aTime+"ms",
   });
 
   container.appendChild(streamContainer);
@@ -156,8 +158,7 @@ function create(tag, className) {
 
 function normalizeData(statusLines) {
   const rows = statusLines.split("\n");
-  const dateNormalized = splitRowsByDate(rows);
-
+  const [dateNormalized, time] = splitRowsByDate(rows);
   let relativeDateMap = {};
   const now = Date.now();
   for (const [key, val] of Object.entries(dateNormalized)) {
@@ -170,7 +171,7 @@ function normalizeData(statusLines) {
   }
 
   relativeDateMap.upTime = dateNormalized.upTime;
-  return relativeDateMap;
+  return [relativeDateMap, time];
 }
 
 function getDayAverage(val) {
@@ -188,6 +189,7 @@ function getRelativeDays(date1, date2) {
 function splitRowsByDate(rows) {
   let dateValues = {};
   let sum = 0,
+    sum2 = 0,
     count = 0;
   for (var ii = 0; ii < rows.length; ii++) {
     const row = rows[ii];
@@ -195,7 +197,7 @@ function splitRowsByDate(rows) {
       continue;
     }
 
-    const [dateTimeStr, resultStr] = row.split(",", 2);
+    const [dateTimeStr, resultStr, resultTime] = row.split(",", 3);
     const dateTime = new Date(dateTimeStr.replace(/-/g, "/"));
     const dateStr = dateTime.toDateString();
 
@@ -213,14 +215,20 @@ function splitRowsByDate(rows) {
       result = 1;
     }
     sum += result;
+    sum2 += parseFloat(resultTime);
     count++;
 
     resultArray.push(result);
   }
-
+  //console.log(sum2);
   const upTime = count ? ((sum / count) * 100).toFixed(2) + "%" : "--%";
+  const Time = ((sum2 / count)*1000).toFixed();
+  
+  //console.log(Time);
+  //const Time = (parseFloat(rows.substring(rows.lastIndexOf(', ')+1))*1000).toFixed(0);
+  //dateValues.Time = Time;
   dateValues.upTime = upTime;
-  return dateValues;
+  return [dateValues, Time];
 }
 
 let tooltipTimeout = null;
