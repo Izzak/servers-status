@@ -18,7 +18,7 @@ jobs:
         PAGES: ${{ secrets.PAGES }}
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-    - name: Check all sites
+    - name: Check status
       id: check_script
       shell: bash
       run: |
