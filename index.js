@@ -7,8 +7,17 @@ async function genReportLog(container, key, url) {
     statusLines = await response.text();
   }
   key = key.replaceAll("logs/","").replaceAll(".log","");
+  const Time = '';
+  var array = string.split(', ');
+  if (array[1] == '200' && array[1] == '202' && array[1] == '201' && array[1] == '301' && array[1] == '307') {
+    array[1] = "success";
+    Time = (parseFloat(array[2])*1000).toFixed(0);;
+  } else {
+    array[1] = "failed"
+    Time = '0';
+  }
+  statusLines = array.join(", ");
   const normalized = normalizeData(statusLines);
-  const Time = (parseFloat(statusLines.substring(statusLines.lastIndexOf(', ')+1))*1000).toFixed(0);
   const statusStream = constructStatusStream(key, url, normalized, Time);
   container.appendChild(statusStream);
 }
