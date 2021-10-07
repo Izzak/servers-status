@@ -15,7 +15,6 @@ jobs:
     - uses: actions/checkout@v2
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-
     - name: Check status LOAD BALANCER
       id: check_load_balancer
       shell: bash
@@ -26,7 +25,6 @@ jobs:
           IFS='=' read -ra odkaz <<< "$ODKAZ"
           (echo -n $(date '+%Y-%m-%d %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --max-time 5 --insecure --output /dev/null ${odkaz[1]};echo) >> logs/${odkaz[0]}.log
         done
-
     - name: Check status SERVER 1
       id: check_server_1
       shell: bash
@@ -36,7 +34,6 @@ jobs:
           IFS='=' read -ra odkaz <<< "$ODKAZ"
           (echo -n $(date '+%Y-%m-%d %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --max-time 5 --insecure --output /dev/null ${odkaz[1]};echo) >> logs/${odkaz[0]}.log
         done
-
     - name: Check status SERVER 2
       id: check_server_2
       shell: bash
@@ -46,7 +43,6 @@ jobs:
           IFS='=' read -ra odkaz <<< "$ODKAZ"
           (echo -n $(date '+%Y-%m-%d %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --max-time 5 --insecure --output /dev/null ${odkaz[1]};echo) >> logs/${odkaz[0]}.log
         done
-
     - name: Check status SERVER 3
       id: check_server_3
       shell: bash
@@ -56,13 +52,11 @@ jobs:
           IFS='=' read -ra odkaz <<< "$ODKAZ"
           (echo -n $(date '+%Y-%m-%d %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --max-time 5 --insecure --output /dev/null ${odkaz[1]};echo) >> logs/${odkaz[0]}.log
         done
-
     - name: Generate filesname
       id: filesname
       shell: bash
       run: |
         find logs/ -iname '*.log' > logs/files.cfg
-
     - name: Commit and push files
       id: commit
       run: |
