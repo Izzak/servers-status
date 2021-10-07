@@ -20,6 +20,7 @@ jobs:
       id: shell_script_run
       shell: bash
       run: |
+        mkdir -p logs
         IFS=';' read -ra ODKAZY <<< "${{ secrets.PAGES }}"
         for odkaz in "${ODKAZY[@]}"; do
           (echo -n $(date '+%d/%m/%Y %H:%M:%S')", ";curl --write-out '%{http_code}, %{time_total}' --silent --insecure --output /dev/null $odkaz;echo "") >> logs/$odkaz.txt
