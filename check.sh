@@ -3,7 +3,7 @@ mkdir -p logs
 IFS='|' read -ra ODKAZY <<< "$1"
 for ODKAZ in "${ODKAZY[@]}"; do
     IFS='=' read -ra odkaz <<< "$ODKAZ"
-    echo "${odkaz[1]}"
+    echo "${odkaz[0]}"
     for i in 1 2 3 4 5; 
     do
         obsah=$(echo -n $(date '+%Y-%m-%d %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --max-time 10 --insecure --output /dev/null ${odkaz[1]})
