@@ -28,17 +28,8 @@ jobs:
       id: commit
       run: |
         git config --local user.email "tomas-dockal@seznam.cz"
-        git config --local user.name "github-actions"
-        git add --all
-        if [-z "$(git status --porcelain)"]; then
-          echo "::set-output name=push::false"
-        else
-          git commit -m "Add changes" -a
-          echo "::set-output name=push::true"
-        fi
+        git config --local user.name "Izzak"
+        git add -A --force logs/
+        git commit -am '[Automated] Update Status Check Logs'
+        git push
       shell: bash
-    - name: Push changes
-      if: steps.commit.outputs.push == 'true'
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
