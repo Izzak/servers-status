@@ -26,8 +26,9 @@ jobs:
         IFS='|' read -ra ODKAZY <<< "${{ secrets.PAGES }}"
         for ODKAZ in "${ODKAZY[@]}"; do
           IFS='=' read -ra odkaz <<< "$ODKAZ"
-          (echo -n $(date '+%d/%m/%Y %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --insecure --output /dev/null ${odkaz[1]};echo) >> logs/${odkaz[0]}.txt
+          (echo -n $(date '+%d/%m/%Y %H:%M:%S')", ";curl --write-out '%{response_code}, %{time_total}' --silent --insecure --output /dev/null ${odkaz[1]};echo) >> logs/${odkaz[0]}.log
         done
+        find logs/ -iname '*.log' > logs/files.cfg
     - name: Commit and push files
       id: commit
       run: |
