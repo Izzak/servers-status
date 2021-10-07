@@ -1,0 +1,41 @@
+name: Status Check
+
+# Controls when the action will run.
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  push:
+    branches:
+      - master
+      - main
+
+
+jobs:
+  status-check:
+    runs-on: ubuntu-latest
+    name: Check all sites
+    steps:
+    - uses: actions/checkout@v2
+    - name: Check all sites
+      id: shell_script_run
+      shell: bash
+      run: |
+      (echo -n $(date '+%d/%m/%Y %H:%M:%S')", ";curl --write-out '%{http_code}, %{time_total}' --silent --insecure --output $SUPER_SECRET.tx $SUPER_SECRET;echo "") >> $SUPER_SECRET.txt
+    - name: Commit files
+      id: commit
+      run: |
+        git config --local user.email "tomas-dockal@seznam.cz"
+        git config --local user.name "github-actions"
+        git add --all
+        if [-z "$(git status --porcelain)"]; then
+          echo "::set-output name=push::false"
+        else
+          git commit -m "Add changes" -a
+          echo "::set-output name=push::true"
+        fi
+      shell: bash
+    - name: Push changes
+      if: steps.commit.outputs.push == 'true'
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
