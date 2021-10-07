@@ -1,5 +1,15 @@
 const maxDays = 30;
 
+
+const testFolder = './logs/';
+const fs = require('fs');
+
+fs.readdir(testFolder, (err, files) => {
+  files.forEach(file => {
+    console.log(file);
+  });
+});
+
 async function genReportLog(container, key, url) {
   const response = await fetch("logs/" + key + ".txt");
   let statusLines = "";
