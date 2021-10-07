@@ -1,15 +1,5 @@
 const maxDays = 30;
 
-
-const testFolder = './logs/';
-const fs = require('fs');
-
-fs.readdir(testFolder, (err, files) => {
-  files.forEach(file => {
-    console.log(file);
-  });
-});
-
 async function genReportLog(container, key, url) {
   const response = await fetch("logs/" + key + ".txt");
   let statusLines = "";
@@ -249,15 +239,23 @@ function hideTooltip() {
 }
 
 async function genAllReports() {
-  const configText = process.env.PAGES;
-  const configLines = configText.split("|");
-  for (let ii = 0; ii < configLines.length; ii++) {
-    const configLine = configLines[ii];
-    const [key, url] = configLine.split("=");
-    if (!key || !url) {
-      continue;
-    }
+    const testFolder = './logs/';
+    const fs = require('fs');
 
-    await genReportLog(document.getElementById("reports"), key, url);
-  }
+    fs.readdir(testFolder, (err, files) => {
+    files.forEach(file => {
+        console.log(file);
+    });
+    });
+    const configText = process.env.PAGES;
+    const configLines = configText.split("|");
+    for (let ii = 0; ii < configLines.length; ii++) {
+        const configLine = configLines[ii];
+        const [key, url] = configLine.split("=");
+        if (!key || !url) {
+        continue;
+        }
+
+        await genReportLog(document.getElementById("reports"), key, url);
+    }
 }
